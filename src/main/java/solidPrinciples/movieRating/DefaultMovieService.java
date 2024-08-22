@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public claDefaultMovieService implements MovieService {
+public class DefaultMovieService implements MovieService {
     private final Map<String, Movie> movies = new HashMap<>();
 
     @Override
