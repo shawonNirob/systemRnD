@@ -1,43 +1,52 @@
 package problems;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FileRename {
 
-    private static int count = 0;
-    // Function to find all possible subsequences
-    public static List<String> findAllSubsequences(String oldName, String newName) {
-        List<String> results = new ArrayList<>();
-        backtrack(results, new StringBuilder(), oldName, newName, 0, 0);
-        return results;
+    // Memoization cache to store already computed states
+    private static final Map<String, Integer> memo = new HashMap<>();
+
+    // Function to count all possible subsequences
+    public static int countSubsequences(String oldName, String newName) {
+        return backtrack(oldName, newName, 0, 0);
     }
 
-    // Backtracking function
-    private static void backtrack(List<String> results, StringBuilder current, String oldName, String newName, int i, int j) {
-        // Base case: If we have formed the entire newName, add the current subsequence to the result list
+    // Backtracking function with memoization
+    private static int backtrack(String oldName, String newName, int i, int j) {
+        // Base case: If we have formed the entire newName, return 1 (found a valid subsequence)
         if (j == newName.length()) {
-            results.add(current.toString());
-            count++;
-            return;
+            return 1;
         }
 
         // Base case: If we have exhausted oldName but newName is not completely formed
         if (i == oldName.length()) {
-            return;
+            return 0;
         }
+
+        // Create a unique key for the current state
+        String key = i + "," + j;
+
+        // If this state has already been computed, return the cached result
+        if (memo.containsKey(key)) {
+            return memo.get(key);
+        }
+
+        int result = 0;
 
         // If the current characters of oldName and newName match
         if (oldName.charAt(i) == newName.charAt(j)) {
-            // Include the current character and move both pointers forward
-            current.append(oldName.charAt(i));
-            backtrack(results, current, oldName, newName, i + 1, j + 1);
-            // Backtrack by removing the last character
-            current.deleteCharAt(current.length() - 1);
+            // Move both pointers forward (include the character in subsequence)
+            result += backtrack(oldName, newName, i + 1, j + 1);
         }
 
         // Skip the current character in oldName and move to the next character
-        backtrack(results, current, oldName, newName, i + 1, j);
+        result += backtrack(oldName, newName, i + 1, j);
+
+        // Store the result in the memoization cache and return it
+        memo.put(key, result);
+        return result;
     }
 
     // Driver function
@@ -45,14 +54,10 @@ public class FileRename {
         String oldName = "abcababcd";
         String newName = "abc";
 
-        // Call the function to find all subsequences
-        List<String> subsequences = findAllSubsequences(oldName, newName);
+        // Call the function to count all subsequences
+        int count = countSubsequences(oldName, newName);
 
-        // Print the results
-        System.out.println("All possible subsequences are: ");
-        for (String subsequence : subsequences) {
-            System.out.println(subsequence);
-        }
-        System.out.println("Total count: " + count);
+        // Print the total count
+        System.out.println("Total count of subsequences: " + count);
     }
 }
