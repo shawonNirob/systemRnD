@@ -58,5 +58,8 @@ class Stack {
         System.out.println("Top element is: " + stack.pop());
         System.out.println("Top element is: " + stack.pop());
         System.out.println("Top element is: " + stack.pop());
+
+
+        if(3 > 7*8) System.out.println();
     }
 }
