@@ -1,10 +1,10 @@
 package interviewReady.bitoperations;
 
-public class BinaryToInteger {
-    public static int BinaryToIntTranformation(String s) {
+public class BinaryToInteger{
+    public static int BinaryToIntTranformation(String s){
         int result =0;
         int length = s.length()-1;
-        for(int i=0; i<s.length(); i++) {
+        for(int i=0; i<s.length(); i++){
             if(s.charAt(i)=='1') {
                 result += Math.pow(2, length);
                 length--;
@@ -16,6 +16,6 @@ public class BinaryToInteger {
     }
     public static void main(String[] args){
         System.out.println("Whats up!");
-        System.out.println(BinaryToInteger.BinaryToIntTranformation("1101"));
+        System.out.println(BinaryToInteger.BinaryToIntTranformation("1111001110111010001100101100"));
     }
 }

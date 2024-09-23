@@ -14,6 +14,6 @@ public class IntegerToBinary{
     }
     public static void main(String[] args){
         System.out.println("Whats up!");
-        System.out.println(IntegerToBinary.IntegerToBinaryTranformation(13));
+        System.out.println(IntegerToBinary.IntegerToBinaryTranformation(255566636));
     }
 }
