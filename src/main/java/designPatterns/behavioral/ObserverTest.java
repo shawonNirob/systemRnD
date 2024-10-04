@@ -3,6 +3,7 @@ package designPatterns.behavioral;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
 public class ObserverTest {
     public static void main(String[] args) {
         ObserverTest weatherStation = new ObserverTest();
@@ -17,3 +18,6 @@ public class ObserverTest {
         weatherStation.setMeasurements(25.0f, 90.0f, 1005.0f);
     }
 }
+
+
+ */
