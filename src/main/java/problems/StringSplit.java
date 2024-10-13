@@ -2,12 +2,16 @@ package problems;
 
 public class StringSplit {
     public static void main(String[] args) {
-        String s1 = "Md Shawon Sarowar. How are you, , I am fine. What is your address? My Adress is #Badda, Dahaka";
+        String str1 = "hello. how are you? i am fine! let's code.";
 
-        String[] arr = s1.split("[\\s\\.\\,\\?\\#]+");
+        // Split by sentence-ending punctuation (period, question mark, or exclamation mark)
+        String[] sentences = str1.split("(?<=[\\.\\?\\!\\s])+");
 
-        for (String s : arr) {
-            System.out.println(s);
+        StringBuilder result = new StringBuilder();
+
+        for (String sentence : sentences) {
+            System.out.println(sentence);
         }
+
     }
 }
