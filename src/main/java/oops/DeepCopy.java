@@ -36,13 +36,15 @@ class PersonBd{
 
 public class DeepCopy {
     public static void main(String[] args) {
-        Address adress1 = new Address("Rangpur");
-        PersonBd person1 = new PersonBd("Nirob", adress1);
+        Address address1 = new Address("Rangpur");
+        PersonBd person1 = new PersonBd("Nirob", address1);
 
-
+        // Deep copy of person1
         PersonBd person2 = new PersonBd(person1);
 
         person2.name = "Ayan";
+
+        // Modifying the city of the deep copy does not affect the original object
         person2.address.city = "Kurigram";
 
         //person1.name = "Ayaz";
