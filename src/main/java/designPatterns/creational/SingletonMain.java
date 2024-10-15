@@ -65,7 +65,8 @@ public class SingletonMain {
         billPughInstance.showMessage();
 
         // Verify that all instances are the same
-        //System.out.println(eagerInstance == lazyInstance); // Output: false (different implementations)
-        //System.out.println(lazyInstance == billPughInstance); // Output: false (different implementations)
+        System.out.println(eagerInstance.equals(lazyInstance)); // Output: false (different implementations)
+        System.out.println(lazyInstance.equals(billPughInstance));
+        System.out.println(billPughInstance.equals(eagerInstance));// Output: false (different implementations)
     }
 }
