@@ -11,6 +11,9 @@ class EagerSingleton {
     public static EagerSingleton getInstance() {
         return instance;
     }
+    public void showMessage() {
+        System.out.println("Hello, I am a EagerSingleton instance!");
+    }
 }
 
 class LazySingleton {
@@ -27,6 +30,9 @@ class LazySingleton {
         }
         return instance;
     }
+    public void showMessage() {
+        System.out.println("Hello, I am a LazySingleton instance!");
+    }
 }
 
 class BillPughSingleton {
@@ -42,6 +48,10 @@ class BillPughSingleton {
     public static BillPughSingleton getInstance() {
         return SingletonHelper.INSTANCE;
     }
+
+    public void showMessage() {
+        System.out.println("Hello, I am a BillPughSingleton instance!");
+    }
 }
 
 public class SingletonMain {
@@ -50,8 +60,12 @@ public class SingletonMain {
         LazySingleton lazyInstance = LazySingleton.getInstance();
         BillPughSingleton billPughInstance = BillPughSingleton.getInstance();
 
+        eagerInstance.showMessage();
+        lazyInstance.showMessage();
+        billPughInstance.showMessage();
+
         // Verify that all instances are the same
-        System.out.println(eagerInstance == lazyInstance); // Output: false (different implementations)
-        System.out.println(lazyInstance == billPughInstance); // Output: false (different implementations)
+        //System.out.println(eagerInstance == lazyInstance); // Output: false (different implementations)
+        //System.out.println(lazyInstance == billPughInstance); // Output: false (different implementations)
     }
 }
