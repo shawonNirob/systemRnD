@@ -64,9 +64,13 @@ public class SingletonMain {
         lazyInstance.showMessage();
         billPughInstance.showMessage();
 
+        LazySingleton lazyInstance2 = LazySingleton.getInstance();
+        System.out.println(lazyInstance2.equals(lazyInstance));     //true
+
+
         // Verify that all instances are the same
         System.out.println(eagerInstance.equals(lazyInstance)); // Output: false (different implementations)
-        System.out.println(lazyInstance.equals(billPughInstance));
+        System.out.println(lazyInstance.equals(billPughInstance));    // false
         System.out.println(billPughInstance.equals(eagerInstance));// Output: false (different implementations)
     }
 }
