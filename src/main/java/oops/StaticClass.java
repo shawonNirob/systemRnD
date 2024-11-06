@@ -13,5 +13,7 @@ public class StaticClass {
         Counter c1 = new Counter();
         Counter c2 = new Counter();
         System.out.println(c2.count); // Output: 2 (shared across all instances)
+
+
     }
 }
