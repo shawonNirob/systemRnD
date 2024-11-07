@@ -7,13 +7,13 @@ class Engine{
 }
 
 class Car{
-    public Engine engine;
+    public Engine engine; // The Car "has a" Engine
 
     public Car(){
-        engine = new Engine();
+        engine = new Engine(); // Car contains a engine object
     }
     public void start(){
-        engine.start();
+        engine.start(); // Calling the method of engine object
         System.out.println("Car is running at 10 mile/hour");
     }
 }
