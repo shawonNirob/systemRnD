@@ -1,7 +1,5 @@
 package oops;
 
-import org.mockito.Mockito;
-import static org.mockito.Mockito.*;
 
 class Engine1{
     public void start(){
