@@ -1,13 +1,13 @@
 package designPatterns.creational;
 
 // Product classes (Car and Engine)
-class Car {
-    private Engine engine;
+class CarB{
+    private EngineB engine;
     private String color;
     private String model;
     private int seats;
 
-    private Car(Builder builder) {
+    private CarB(Builder builder){
         this.engine = builder.engine;
         this.color = builder.color;
         this.model = builder.model;
@@ -20,58 +20,59 @@ class Car {
     }
 
     // Nested static Builder class to build Car object
-    public static class Builder {
-        private Engine engine;
+    public static class Builder{
+        private EngineB engine;
         private String color;
         private String model;
         private int seats;
 
-        public Builder setEngine(Engine engine) {
+        public Builder setEngine(EngineB engine){
             this.engine = engine;
             return this;
         }
 
-        public Builder setColor(String color) {
+        public Builder setColor(String color){
             this.color = color;
             return this;
         }
 
-        public Builder setModel(String model) {
+        public Builder setModel(String model){
             this.model = model;
             return this;
         }
 
-        public Builder setSeats(int seats) {
+        public Builder setSeats(int seats){
             this.seats = seats;
             return this;
         }
 
-        public Car build() {
-            return new Car(this);
+        public CarB build(){
+            return new CarB(this);
         }
     }
 }
 
-class Engine {
+// Product classes (Car and Engine)
+class EngineB{
     private String type;
-    private int horsepower;
+    private int horsePower;
     private int cylinders;
 
-    private Engine(EngineBuilder builder) {
+    private EngineB(EngineBuilder builder){
         this.type = builder.type;
-        this.horsepower = builder.horsepower;
+        this.horsePower = builder.horsePower;
         this.cylinders = builder.cylinders;
     }
 
     @Override
     public String toString() {
-        return "Engine [type=" + type + ", horsepower=" + horsepower + ", cylinders=" + cylinders + "]";
+        return "Engine [type=" + type + ", horsePower=" + horsePower + ", cylinders=" + cylinders + "]";
     }
 
-    // Nested static Builder class to build Engine object
-    public static class EngineBuilder {
+    // Nested static EngineBuilder class to build Engine object
+    public static class EngineBuilder{
         private String type;
-        private int horsepower;
+        private int horsePower;
         private int cylinders;
 
         public EngineBuilder setType(String type) {
@@ -79,8 +80,8 @@ class Engine {
             return this;
         }
 
-        public EngineBuilder setHorsepower(int horsepower) {
-            this.horsepower = horsepower;
+        public EngineBuilder setHorsePower(int horsePower) {
+            this.horsePower = horsePower;
             return this;
         }
 
@@ -89,61 +90,54 @@ class Engine {
             return this;
         }
 
-        public Engine build() {
-            return new Engine(this);
+        public EngineB build(){
+            return new EngineB(this);
         }
     }
 }
 
-// Director class to manage the construction process
-class CarDirector {
-    public Car buildSportsCar() {
-        // Create an Engine using the Engine Builder
-        Engine engine = new Engine.EngineBuilder()
+//Director class to manage the construction process
+class CarDirector{
+    public CarB buildSportsCar(){
+        EngineB engine = new EngineB.EngineBuilder()
                 .setType("V8")
-                .setHorsepower(500)
-                .setCylinders(8)
+                .setHorsePower(500)
+                .setCylinders(9)
                 .build();
 
-        // Use Car Builder to build the Car with the Engine and other details
-        return new Car.Builder()
+        return new CarB.Builder()
                 .setEngine(engine)
-                .setColor("Red")
-                .setModel("Sports")
+                .setColor("Blue")
+                .setModel("lamborghini temerario")
                 .setSeats(2)
                 .build();
     }
 
-    public Car buildSUV() {
-        // Create an Engine using the Engine Builder
-        Engine engine = new Engine.EngineBuilder()
-                .setType("V6")
-                .setHorsepower(300)
-                .setCylinders(6)
+    public CarB buildDefenderCar(){
+        EngineB engine  = new EngineB.EngineBuilder()
+                .setType("D400")
+                .setHorsePower(300)
+                .setCylinders(8)
                 .build();
 
-        // Use Car Builder to build the Car with the Engine and other details
-        return new Car.Builder()
+        return new CarB.Builder()
                 .setEngine(engine)
+                .setModel("Land Rover Defender")
                 .setColor("Black")
-                .setModel("SUV")
-                .setSeats(5)
+                .setSeats(4)
                 .build();
     }
 }
 
-// Main class to demonstrate the Builder pattern
 public class Builder {
     public static void main(String[] args) {
-        CarDirector director = new CarDirector();
+        CarDirector carDirector = new CarDirector();
 
-        // Building a sports car using the director
-        Car sportsCar = director.buildSportsCar();
-        System.out.println(sportsCar);
 
-        // Building an SUV using the director
-        Car suv = director.buildSUV();
-        System.out.println(suv);
+        CarB sportscar = carDirector.buildSportsCar();
+        System.out.println(sportscar);
+
+        CarB defender = carDirector.buildDefenderCar();
+        System.out.println(defender);
     }
 }
-
