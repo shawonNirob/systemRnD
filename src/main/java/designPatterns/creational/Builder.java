@@ -1,5 +1,10 @@
 package designPatterns.creational;
 
+
+import com.google.gson.Gson;
+//import javax.xml.bind.annotation.XmlElement;
+//import javax.xml.bind.annotation.XmlRootElement;
+
 // Product classes (Car and Engine)
 class CarB{
     private EngineB engine;
@@ -17,6 +22,24 @@ class CarB{
     @Override
     public String toString() {
         return "Car [engine=" + engine + ", color=" + color + ", model=" + model + ", seats=" + seats + "]";
+    }
+
+    public String toJason(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
+    public String toXML() {
+        return "<Car>" +
+                "<Engine>" + engine.toXml() + "</Engine>" +
+                "<Color>" + color + "</Color>" +
+                "<Model>" + model + "</Model>" +
+                "<Seats>" + seats + "</Seats>" +
+                "</Car>";
+    }
+
+    public String toCSV(){
+        return engine.toCSV() + "," + color + "," + model + "," + seats;
     }
 
     // Nested static Builder class to build Car object
@@ -67,6 +90,16 @@ class EngineB{
     @Override
     public String toString() {
         return "Engine [type=" + type + ", horsePower=" + horsePower + ", cylinders=" + cylinders + "]";
+    }
+
+    public String toXml() {
+        return "<EngineType>" + type + "</EngineType>" +
+                "<Horsepower>" + horsePower + "</Horsepower>" +
+                "<Cylinders>" + cylinders + "</Cylinders>";
+    }
+
+    public String toCSV(){
+        return type + "," + horsePower + "," + cylinders;
     }
 
     // Nested static EngineBuilder class to build Engine object
@@ -139,5 +172,20 @@ public class Builder {
 
         CarB defender = carDirector.buildDefenderCar();
         System.out.println(defender);
+
+
+        System.out.println();
+
+        System.out.println("Text Representation: ");
+        System.out.println(sportscar);
+
+        System.out.println("JSON Representation: ");
+        System.out.println(sportscar.toJason());
+
+        System.out.println("XML Representation: ");
+        System.out.println(sportscar.toXML());
+
+        System.out.println("CSV Representation: ");
+        System.out.println(sportscar.toCSV());
     }
 }
