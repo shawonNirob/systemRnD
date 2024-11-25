@@ -1,144 +1,168 @@
 package designPatterns.structural;
 
 import java.util.ArrayList;
-import java.util.List;
 
-// Component Interface
+//Component Interface
 interface CarPart {
-    void display();  // Display method to be implemented by both Leaf and Composite components
+    void display();
 }
 
-// Leaf Component: Engine
-class Engine implements CarPart {
+//Leaf Component: Engine
+class EngineLeaf implements CarPart {
     private String type;
     private int horsePower;
 
-    public Engine(String type, int horsePower) {
+    public EngineLeaf(String type, int horsePower) {
         this.type = type;
         this.horsePower = horsePower;
     }
 
     @Override
     public void display() {
-        System.out.println("Engine Type: " + type + ", HorsePower: " + horsePower);
+        System.out.println("Engine type: " + type + ", Horse power: " + horsePower);
     }
 }
 
-// Leaf Component: Wheels
-class Wheels implements CarPart {
+//Leaf Component: FuelTank
+class FuelTank implements CarPart {
+    private String fuelType;
+    private String fuelCapacity;
+
+    public FuelTank(String fuelType, String fuelCapacity) {
+        this.fuelType = fuelType;
+        this.fuelCapacity = fuelCapacity;
+    }
+
+    @Override
+    public void display() {
+        System.out.println("Fuel type: " + fuelType + ", Fuel capacity: " + fuelCapacity);
+    }
+}
+
+//Leaf Component: Wheels
+class WheelsLeaf implements CarPart {
     private int size;
 
-    public Wheels(int size) {
+    public WheelsLeaf(int size) {
         this.size = size;
     }
 
     @Override
     public void display() {
-        System.out.println("Wheels Size: " + size + " inches");
+        System.out.println("Wheels size: " + size);
     }
 }
 
-// Leaf Component: Doors
-class Doors implements CarPart {
+//Leaf Component: Doors
+class DoorLeaf implements CarPart {
     private int numberOfDoors;
 
-    public Doors(int numberOfDoors) {
+    public DoorLeaf(int numberOfDoors) {
         this.numberOfDoors = numberOfDoors;
     }
 
     @Override
     public void display() {
-        System.out.println("Number of Doors: " + numberOfDoors);
+        System.out.println("Doors: " + numberOfDoors);
     }
 }
 
-// Composite Component: Car Body (Contains other CarParts)
-class CarBody implements CarPart {
-    private List<CarPart> carParts = new ArrayList<>();
+//Leaf Component: Seats
+class SeatLeaf implements CarPart {
+    private int seatNumbers;
 
-    public void addPart(CarPart part) {
-        carParts.add(part);
+    public SeatLeaf(int seatNumbers) {
+        this.seatNumbers = seatNumbers;
+    }
+
+    @Override
+    public void display() {
+        System.out.println("Seat numbers: " + seatNumbers);
+    }
+}
+
+//Composite Component: Car Body (Wheels, Doors)
+class CarBody implements CarPart {
+    ArrayList<CarPart> carParts = new ArrayList<>();
+
+    public void addCarBodyPart(CarPart carPart) {
+        carParts.add(carPart);
     }
 
     @Override
     public void display() {
         System.out.println("Car Body: ");
-        for (CarPart part : carParts) {
-            part.display();  // Delegate the responsibility to parts (either leaf or composite)
+        for (CarPart carPart : carParts) {
+            carPart.display();
         }
     }
 }
 
-// Composite Component: Car Interior (Contains other CarParts)
+//Composite Component: Car Interior (Seats)
 class CarInterior implements CarPart {
-    private List<CarPart> carParts = new ArrayList<>();
+    private ArrayList<CarPart> carParts = new ArrayList<>();
 
-    public void addPart(CarPart part) {
-        carParts.add(part);
+    public void addCarInteriorPart(CarPart carPart) {
+        carParts.add(carPart);
     }
 
     @Override
     public void display() {
         System.out.println("Car Interior: ");
-        for (CarPart part : carParts) {
-            part.display();  // Delegate the responsibility to parts (either leaf or composite)
+        for (CarPart carPart : carParts) {
+            carPart.display();
         }
     }
 }
 
-// Composite Component: Car (Contains Car Body, Car Interior, and other parts)
-class Car implements CarPart {
+//Top-level Component: Car (Contains Car Body, Car Interior, Engine, and other parts)
+class CarComposite implements CarPart {
     private String model;
-    private CarBody carBody;
-    private CarInterior carInterior;
+    private ArrayList<CarPart> carParts = new ArrayList<>();
 
-    public Car(String model) {
+    public CarComposite(String model) {
         this.model = model;
-        this.carBody = new CarBody();
-        this.carInterior = new CarInterior();
     }
 
-    public void addCarBodyPart(CarPart part) {
-        carBody.addPart(part);
-    }
-
-    public void addCarInteriorPart(CarPart part) {
-        carInterior.addPart(part);
+    // Add parts to the car
+    public void addParts(CarPart carPart) {
+        carParts.add(carPart);
     }
 
     @Override
     public void display() {
         System.out.println("Car Model: " + model);
-        carBody.display();  // Display the Car Body
-        carInterior.display();  // Display the Car Interior
+        for (CarPart carPart : carParts) {
+            carPart.display();
+        }
     }
 }
 
-// Client Code
 public class Composite {
     public static void main(String[] args) {
         // Create individual parts (Leaf Components)
-        Engine engine = new Engine("V8", 500);
-        Wheels wheels = new Wheels(18);
-        Doors doors = new Doors(4);
+        EngineLeaf engine = new EngineLeaf("L411", 907);
+        FuelTank fuelTank = new FuelTank("Gasoline", "4.0L");
+        WheelsLeaf wheels = new WheelsLeaf(4);
+        DoorLeaf door = new DoorLeaf(2);
+        SeatLeaf seat = new SeatLeaf(2);
 
-        // Create composite components (CarBody, CarInterior)
+        // Create composite components (Car Body, Car Interior)
         CarBody carBody = new CarBody();
-        carBody.addPart(engine);
-        carBody.addPart(wheels);
-        carBody.addPart(doors);
+        carBody.addCarBodyPart(wheels);
+        carBody.addCarBodyPart(door);
 
         CarInterior carInterior = new CarInterior();
-        carInterior.addPart(new Wheels(16));  // Another set of wheels in the interior for simulation
+        carInterior.addCarInteriorPart(seat);
 
-        // Create Car (Composite) and add body and interior parts
-        Car car = new Car("SportsCar");
-        car.addCarBodyPart(engine);
-        car.addCarBodyPart(wheels);
-        car.addCarBodyPart(doors);
-        car.addCarInteriorPart(carInterior);
+        // Create Car (Top-level Composite) and other parts
+        CarComposite carComposite = new CarComposite("Lamborghini Temerio");
+        carComposite.addParts(fuelTank);
+        carComposite.addParts(engine);
+        carComposite.addParts(carBody);
+        carComposite.addParts(carInterior);
 
-        // Display the entire car system
-        car.display();
+        // Display the complete car details
+        carComposite.display();
     }
 }
