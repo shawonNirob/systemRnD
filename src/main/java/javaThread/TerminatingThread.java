@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
-class watch implements Runnable{
+class Watch implements Runnable{
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     @Override
@@ -38,7 +38,7 @@ class watch implements Runnable{
 
 public class TerminatingThread{
     public static void main(String[] args) throws InterruptedException {
-        watch watch = new watch();
+        Watch watch = new Watch();
         Thread watchThread = new Thread(watch);
         watchThread.start();
 
@@ -54,16 +54,16 @@ The code you've shared implements a simple clock application using Java threads.
 
 In the `TerminatingThread` class's main method:
 
-1. A new `watch` object is created, which implements the `Runnable` interface
-2. This `watch` object is passed to a new `Thread` called `watchThread`
+1. A new `Watch` object is created, which implements the `Runnable` interface
+2. This `Watch` object is passed to a new `Thread` called `watchThread`
 3. The thread is started using `watchThread.start()`
 4. The main thread sleeps for 1 second (1000 milliseconds)
-5. After 1 second, the main thread interrupts the watch thread using `watchThread.interrupt()`
+5. After 1 second, the main thread interrupts the Watch thread using `watchThread.interrupt()`
 
 1. **Thread Creation and Startup**:
-   - The main thread creates a `watch` object that implements the `Runnable` interface
-   - A new thread (`watchThread`) is created with this `watch` object
-   - The thread is started, which calls the `run()` method of the `watch` object
+   - The main thread creates a `Watch` object that implements the `Runnable` interface
+   - A new thread (`watchThread`) is created with this `Watch` object
+   - The thread is started, which calls the `run()` method of the `Watch` object
 
 2. **Watch Thread Execution**:
    - The `run()` method contains an infinite loop that continues until the thread is interrupted
@@ -73,14 +73,14 @@ In the `TerminatingThread` class's main method:
      - Checks if the thread has been interrupted
 
 3. **Interruption Handling**:
-   - The main thread sleeps for 1 second, then interrupts the watch thread
-   - When the watch thread is sleeping, the interrupt causes an `InterruptedException`
+   - The main thread sleeps for 1 second, then interrupts the Watch thread
+   - When the Watch thread is sleeping, the interrupt causes an `InterruptedException`
    - The exception is caught in the `sleepOneSecond()` method, which re-interrupts the thread
    - After waking up, the thread checks if it's been interrupted using `Thread.interrupted()`
    - When it detects the interruption, it prints a message and exits the run method
 
 4. **Thread Termination**:
-   - The watch thread terminates when it exits the `run()` method
+   - The Watch thread terminates when it exits the `run()` method
    - The main thread continues execution after calling `interrupt()`
 
 This implementation demonstrates a clean way to handle thread interruption in Java, ensuring that the thread responds to interruption signals even when it's sleeping.
